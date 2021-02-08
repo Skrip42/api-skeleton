@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\LEKLogger;
+namespace App\Service\LEKLogger;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
