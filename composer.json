@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "prefer-stable": true,
-    "version":"v1.0.4",
+    "version":"v1.0.5",
     "require": {
         "php": ">=7.2.5",
         "ext-ctype": "*",

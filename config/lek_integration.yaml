@@ -11,10 +11,10 @@ services:
     #Необхъодимо явно определить syslogudp handler
     #т.к. параметр $rfs не выведен в конфигурацию
     #see Symfony\Bundle\MonologBundle\DependencyInjection\Configuration.php
-  App\Services\LEKLogger\LEKLogFormatter: ~
+  App\Service\LEKLogger\LEKLogFormatter: ~
   Monolog\Handler\SyslogUdpHandler:
     calls:
-      - setFormatter: ['@App\Services\LEKLogger\LEKLogFormatter']
+      - setFormatter: ['@App\Service\LEKLogger\LEKLogFormatter']
     arguments: [
       '%lek_url%',
       '%lek_syslog_port%',
