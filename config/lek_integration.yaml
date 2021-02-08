@@ -1,0 +1,27 @@
+parameters:
+  lek_url: '%env(resolve:LEK_URL)%'
+  lek_server_name: '%env(resolve:LEK_SERVER_NAME)%'
+  lek_syslog_port: '%env(resolve:LEK_SYSLOG_PORT)%'
+
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    #Необхъодимо явно определить syslogudp handler
+    #т.к. параметр $rfs не выведен в конфигурацию
+    #see Symfony\Bundle\MonologBundle\DependencyInjection\Configuration.php
+  App\Services\LEKLogger\LEKLogFormatter: ~
+  Monolog\Handler\SyslogUdpHandler:
+    calls:
+      - setFormatter: ['@App\Services\LEKLogger\LEKLogFormatter']
+    arguments: [
+      '%lek_url%',
+      '%lek_syslog_port%',
+      !php/const LOG_USER,
+      !php/const Monolog\Logger::INFO,
+      true,
+      'symfony_log',
+      !php/const Monolog\Handler\SyslogUdpHandler::RFC3164
+    ]
+
