@@ -1,6 +1,7 @@
 {
+    "name": "skrip42/api-skeleton"
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
