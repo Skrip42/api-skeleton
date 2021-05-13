@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 
 imports:
-#  - { resource: lek_integration.yaml }
+#  - { resource: lek_integration.yaml } #uncomment this to enable lek integration
 
 parameters:
   sms_ru_api_key: '%env(resolve:SMS_RU_API_KEY)%'
