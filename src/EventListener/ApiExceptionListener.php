@@ -1,6 +1,7 @@
 <?php
 namespace App\EventListener;
 
+use App\Exceptions\ApiException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -18,13 +19,6 @@ class ApiExceptionListener
     public function onKernelException(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();
-        $request = $event->getRequest();
-        $route = $request->attributes->get('_route');
-        if (strpos($route, 'api_') !== 0
-            && strpos($route, 'oauth_server_gate') !== 0
-        ) {
-            return;
-        }
         $responseData = $this->serializer->serialize(
             [],
             'api',
@@ -40,7 +34,11 @@ class ApiExceptionListener
 
         $response = new Response();
         $response->setContent($responseData);
-        $response->setStatusCode(Response::HTTP_OK);
+        if ($exception instanceof ApiException) {
+            $response->setStatusCode($exception->getStatusCode());
+        } else {
+            $response->setStatusCode(Response::HTTP_OK);
+        }
         $response->headers->set('Content-Type', 'text/json');
 
         $event->setResponse($response);

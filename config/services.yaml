@@ -4,11 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 
-imports:
-#  - { resource: lek_integration.yaml } #uncomment this to enable lek integration
 
 parameters:
-  sms_ru_api_key: '%env(resolve:SMS_RU_API_KEY)%'
   api_key: '%env(resolve:API_KEY)%'
 
 services:
@@ -41,4 +38,21 @@ services:
     App\EventListener\ApiLoggerListener:
       tags:
         - { name: kernel.event_listener, event: kernel.response }
+    App\EventListener\RemoveApiKeyListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.request }
+    App\EventListener\PutPatchRequestFixListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.request }
 
+    ## uncomment if you want entity validation
+    # App\EntityListener\:
+    #   resource: '../src/EntityListener/*'
+    #   tags:
+    #     - { name: doctrine.orm.entity_listener }
+
+    ## uncomment to enable maker command 'make:rest'
+    # App\Maker\MakeRest:
+    #   arguments:
+    #     ['@maker.doctrine_helper']
+    #   tags: ['maker.command']

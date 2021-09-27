@@ -21,14 +21,15 @@ abstract class AbstractApiController extends AbstractController
         $this->serializer = $serializer;
     }
 
-    public function formatResponse($data)
+    protected function api($data = [], $meta = [])
     {
+        if (empty($meta['success'])) {
+            $meta['success'] = true;
+        }
         $responseData = $this->serializer->serialize(
             $data,
             'api',
-            [
-                'success' => true
-            ]
+            $meta
         );
         $response = new Response();
         $response->setContent($responseData);

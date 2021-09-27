@@ -6,7 +6,3 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             max_files: 60
             channels: ["!api"]
- #       lek:
- #           type: service
- #           id: Monolog\Handler\SyslogUdpHandler
- #           channels: ["!deprecation"]
