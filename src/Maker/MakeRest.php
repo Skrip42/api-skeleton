@@ -49,7 +49,6 @@ final class MakeRest extends AbstractMaker
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
         $command
-            // ->setName('make:rest')
             ->addArgument(
                 'entity-class',
                 InputArgument::OPTIONAL,
@@ -67,7 +66,6 @@ final class MakeRest extends AbstractMaker
             Validator::entityExists($input->getArgument('entity-class'), $this->doctrineHelper->getEntitiesForAutocomplete()),
             'Entity\\'
         );
-        // dump($entityClassDetails);
         $entityDoctrineDetails = $this->doctrineHelper->createDoctrineDetails($entityClassDetails->getFullName());
         $entityMetadata = $this->doctrineHelper->getMetadata($entityClassDetails->getFullName());
         $entity_methods = $entityMetadata->getReflectionClass()->getMethods();
@@ -78,34 +76,6 @@ final class MakeRest extends AbstractMaker
         if ($entityMetadata->getTypeOfField($entityDoctrineDetails->getIdentifier()) == 'integer') {
             $entityIdentifierPattern = "\d+";
         }
-        // dump($entity_setters);
-        // foreach ($entity_setters as $setter) {
-        //     dump($setter->getName());
-        //     dump($setter->getParameters());
-        //     $param = $setter->getParameters()[0];
-        //     dump($param->getName());
-        //     dump($param->getType()->getName());
-        //     dump(strpos($param->getType()->getName(), '\\') === false);
-        // }
-        // die();
-
-
-
-        // $repositoryVars = [];
-
-        // if (null !== $entityDoctrineDetails->getRepositoryClass()) {
-            // $repositoryClassDetails = $generator->createClassNameDetails(
-            //     '\\'.$entityDoctrineDetails->getRepositoryClass(),
-            //     'Repository\\',
-            //     'Repository'
-            // );
-        //
-        //     $repositoryVars = [
-        //         'repository_full_class_name' => $repositoryClassDetails->getFullName(),
-        //         'repository_class_name' => $repositoryClassDetails->getShortName(),
-        //         'repository_var' => lcfirst($this->singularize($repositoryClassDetails->getShortName())),
-        //     ];
-        // }
 
         $controllerClassDetails = $generator->createClassNameDetails(
             $this->controllerClassName,
